@@ -22,9 +22,9 @@ services:
       TZ: Asia/Ho_Chi_Minh
       MARIADB_ROOT_HOST: '%'
       MARIADB_ROOT_PASSWORD: root
-    # volumes:
-    #   - ./dev/docker/init.db:/docker-entrypoint-initdb.d
-    #   - ./db:/var/lib/mysql
+    volumes:
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./db:/var/lib/mysql
     networks:
       - bookstack-network
 
@@ -46,10 +46,7 @@ services:
     depends_on:
       - web
       - db
-    #Chạy lần đầu cài đặt các ứng dụng laravel
-    command: sh -c "composer clear-cache && composer install --no-dev && php artisan key:generate && php artisan migrate && php-fpm8 --nodaemonize"
-    #Chạy lần sau nếu vẫn dùng docker compose
-    #command: php-fpm8 --nodaemonize
+    command: php-fpm8 --nodaemonize
     volumes:
       - ./resource:/var/www/html
     networks:
