@@ -17,7 +17,7 @@
 <h4>1. Install new source:</h4>
 
 ```script
-https://github.com/KhangChina/BookStack.git -b new
+https://github.com/KhangChina/BookStack.git
 ```
 
 <h4>2. Rename <code>.env.example</code> to <code>.env</code></h4>
