@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - ./resource:/var/www/html
+    networks:
+      - bookstack-network
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.9
+    environment:
+      MARIADB_DATABASE: bookstack_db
+      MARIADB_USER: bookstack_user
+      MARIADB_PASSWORD: bookstack_pass
+      TZ: Asia/Ho_Chi_Minh
+      MARIADB_ROOT_HOST: '%'
+      MARIADB_ROOT_PASSWORD: root
+    # volumes:
+    #   - ./dev/docker/init.db:/docker-entrypoint-initdb.d
+    #   - ./db:/var/lib/mysql
+    networks:
+      - bookstack-network
+
+  pma:
+    image: phpmyadmin
+    depends_on:
+      - app
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8080:80"
+    networks:
+      - bookstack-network
+
+  app:
+    build: .
+    depends_on:
+      - web
+      - db
+    #Chạy lần đầu cài đặt các ứng dụng laravel
+    command: sh -c "composer clear-cache && composer install --no-dev && php artisan key:generate && php artisan migrate && php-fpm8 --nodaemonize"
+    #Chạy lần sau nếu vẫn dùng docker compose
+    #command: php-fpm8 --nodaemonize
+    volumes:
+      - ./resource:/var/www/html
+    networks:
+      - bookstack-network
+
+networks:
+  bookstack-network:
