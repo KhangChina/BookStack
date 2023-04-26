@@ -32,8 +32,8 @@ services:
 
   pma:
     image: phpmyadmin
-    # depends_on:
-    #   - app
+    depends_on:
+      - app
     environment:
       PMA_HOST: db
       PMA_USER: root
@@ -48,7 +48,6 @@ services:
     depends_on:
       - web
       - db
-    # command: php-fpm8 --nodaemonize
     volumes:
       - ./resource:/var/www/html
     networks:
