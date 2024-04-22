@@ -21,6 +21,11 @@
 @import "footer";
 @import "lists";
 @import "pages";
+@import "content";
+
+@media print {
+  @import "print";
+}
 
 // Jquery Sortable Styles
 .dragged {
@@ -117,37 +122,6 @@ $loadingSize: 10px;
   }
 }
 
-.contained-search-box {
-  display: flex;
-  height: 38px;
-  input, button {
-    border-radius: 0;
-    border: 1px solid #ddd;
-    @include lightDark(border-color, #ddd, #000);
-    margin-inline-start: -1px;
-  }
-  input {
-    flex: 5;
-    padding: $-xs $-s;
-    &:focus, &:active {
-      outline: 0;
-    }
-  }
-  button {
-    width: 60px;
-  }
-  button i {
-    padding: 0;
-  }
-  button.cancel.active {
-    background-color: $negative;
-    color: #EEE;
-  }
-  svg {
-    margin: 0;
-  }
-}
-
 .entity-selector {
   border: 1px solid #DDD;
   @include lightDark(border-color, #ddd, #111);
@@ -208,6 +182,14 @@ $loadingSize: 10px;
   width:100%;
   height:100%;
   z-index: 150;
+}
+
+@include between($s, $m) {
+  #home-default > .grid.third {
+    display: block;
+    columns: 2;
+    column-gap: $-l !important;
+  }
 }
 
 .list-sort-container {

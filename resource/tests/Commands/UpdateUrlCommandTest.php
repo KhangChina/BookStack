@@ -2,6 +2,8 @@
 
 namespace Tests\Commands;
 
+use BookStack\Entities\Models\Entity;
+use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Tests\TestCase;
 
@@ -23,6 +25,28 @@ class UpdateUrlCommandTest extends TestCase
         ]);
     }
 
+    public function test_command_updates_description_html()
+    {
+        /** @var Entity[] $models */
+        $models = [$this->entities->book(), $this->entities->chapter(), $this->entities->shelf()];
+
+        foreach ($models as $model) {
+            $model->description_html = '<a href="https://example.com/donkeys"></a>';
+            $model->save();
+        }
+
+        $this->artisan('bookstack:update-url https://example.com https://cats.example.com')
+            ->expectsQuestion("This will search for \"https://example.com\" in your database and replace it with  \"https://cats.example.com\".\nAre you sure you want to proceed?", 'y')
+            ->expectsQuestion('This operation could cause issues if used incorrectly. Have you made a backup of your existing database?', 'y');
+
+        foreach ($models as $model) {
+            $this->assertDatabaseHas($model->getTable(), [
+                'id'               => $model->id,
+                'description_html' => '<a href="https://cats.example.com/donkeys"></a>',
+            ]);
+        }
+    }
+
     public function test_command_requires_valid_url()
     {
         $badUrlMessage = 'The given urls are expected to be full urls starting with http:// or https://';
@@ -32,6 +56,13 @@ class UpdateUrlCommandTest extends TestCase
 
         $this->expectException(RuntimeException::class);
         $this->artisan('bookstack:update-url https://cats.example.com');
+    }
+
+    public function test_command_force_option_skips_prompt()
+    {
+        $this->artisan('bookstack:update-url --force https://cats.example.com/donkey https://cats.example.com/monkey')
+            ->expectsOutputToContain('URL update procedure complete')
+            ->assertSuccessful();
     }
 
     public function test_command_updates_settings()

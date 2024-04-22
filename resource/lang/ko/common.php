@@ -6,6 +6,7 @@ return [
 
     // Buttons
     'cancel' => '취소',
+    'close' => '닫기',
     'confirm' => '확인',
     'back' => '뒤로',
     'save' => '저장',
@@ -19,13 +20,13 @@ return [
     'description' => '설명',
     'role' => '권한',
     'cover_image' => '대표 이미지',
-    'cover_image_description' => '이미지 크기는 440x250px 내외입니다.',
+    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
 
     // Actions
     'actions' => '활동',
     'view' => '보기',
     'view_all' => '모두 보기',
-    'new' => 'New',
+    'new' => '신규',
     'create' => '만들기',
     'update' => '바꾸기',
     'edit' => '수정',
@@ -41,21 +42,23 @@ return [
     'remove' => '제거',
     'add' => '추가',
     'configure' => '설정',
+    'manage' => '관리',
     'fullscreen' => '전체화면',
-    'favourite' => '북마크',
-    'unfavourite' => '좋아하지 않음',
+    'favourite' => '즐겨찾기',
+    'unfavourite' => '즐겨찾기 해제',
     'next' => '다음',
     'previous' => '이전',
     'filter_active' => '적용 중:',
     'filter_clear' => '모든 필터 해제',
     'download' => '내려받기',
     'open_in_tab' => '탭에서 열기',
+    'open' => '열기 ',
 
     // Sort Options
     'sort_options' => '정렬 기준',
     'sort_direction_toggle' => '순서 반전',
-    'sort_ascending' => '오름차 순서',
-    'sort_descending' => '내림차 순서',
+    'sort_ascending' => '오름차순',
+    'sort_descending' => '내림차순',
     'sort_name' => '제목',
     'sort_default' => '기본값',
     'sort_created_at' => '만든 날짜',
@@ -81,20 +84,20 @@ return [
     'none' => '없음',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => '홈페이지',
     'header_menu_expand' => '헤더 메뉴 펼치기',
     'profile_menu' => '프로필',
     'view_profile' => '프로필 보기',
     'edit_profile' => '프로필 바꾸기',
     'dark_mode' => '어두운 테마',
     'light_mode' => '밝은 테마',
-    'global_search' => 'Global Search',
+    'global_search' => '전역 검색',
 
     // Layout tabs
     'tab_info' => '정보',
-    'tab_info_label' => 'Tab: 보조 정보 보이기',
+    'tab_info_label' => '탭: 보조 정보 보이기',
     'tab_content' => '내용',
-    'tab_content_label' => 'Tab: 우선 항목 보이기',
+    'tab_content_label' => '탭: 우선 항목 보이기',
 
     // Email Content
     'email_action_help' => ':actionText를 클릭할 수 없을 때는 웹 브라우저에서 다음 링크로 접속할 수 있습니다.',

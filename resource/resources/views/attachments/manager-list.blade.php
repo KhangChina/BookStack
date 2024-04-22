@@ -1,9 +1,10 @@
-<div component="sortable-list" option:sortable-list:handle-selector=".handle">
+<div component="sortable-list"
+     option:sortable-list:handle-selector=".handle, a">
     @foreach($attachments as $attachment)
         <div component="ajax-delete-row"
              option:ajax-delete-row:url="{{ url('/attachments/' . $attachment->id) }}"
              data-id="{{ $attachment->id }}"
-             data-drag-content="{{ json_encode(['text/html' => $attachment->htmlLink(), 'text/plain' => $attachment->markdownLink()]) }}"
+             data-drag-content="{{ json_encode($attachment->editorContent()) }}"
              class="card drag-card">
             <div class="handle">@icon('grip')</div>
             <div class="py-s">

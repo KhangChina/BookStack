@@ -1,22 +1,18 @@
-import {build as buildEditorConfig} from "../wysiwyg/config";
-import {Component} from "./component";
+import {buildForEditor as buildEditorConfig} from '../wysiwyg/config';
+import {Component} from './component';
 
 export class WysiwygEditor extends Component {
 
     setup() {
         this.elem = this.$el;
 
-        this.pageId = this.$opts.pageId;
-        this.textDirection = this.$opts.textDirection;
-        this.isDarkMode = document.documentElement.classList.contains('dark-mode');
-
         this.tinyMceConfig = buildEditorConfig({
             language: this.$opts.language,
             containerElement: this.elem,
-            darkMode: this.isDarkMode,
-            textDirection: this.textDirection,
+            darkMode: document.documentElement.classList.contains('dark-mode'),
+            textDirection: this.$opts.textDirection,
             drawioUrl: this.getDrawIoUrl(),
-            pageId: Number(this.pageId),
+            pageId: Number(this.$opts.pageId),
             translations: {
                 imageUploadErrorText: this.$opts.imageUploadErrorText,
                 serverUploadLimitText: this.$opts.serverUploadLimitText,
@@ -45,7 +41,7 @@ export class WysiwygEditor extends Component {
      */
     getContent() {
         return {
-            html: this.editor.getContent()
+            html: this.editor.getContent(),
         };
     }
 
