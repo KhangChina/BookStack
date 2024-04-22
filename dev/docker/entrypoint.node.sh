@@ -3,6 +3,6 @@
 set -e
 
 npm install
-npm rebuild node-sass
+npm rebuild node-sassC
 
 SHELL=/bin/sh exec npm run watch
