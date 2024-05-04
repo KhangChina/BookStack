@@ -3,6 +3,7 @@
 namespace BookStack\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
+use Closure;
 
 class VerifyCsrfToken extends Middleware
 {
@@ -21,4 +22,15 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'saml2/*',
     ];
+    //Check domain call pass CSRF
+    public function handle($request, Closure $next)
+    {
+        //call from portal
+        if ($request->getHost() == 'localhost') {
+            // skip CSRF check
+            //  array_push($except, 'login');
+            return $next($request);
+        }
+        return parent::handle($request, $next);
+    }
 }

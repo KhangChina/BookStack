@@ -8,13 +8,13 @@ volumes:
 
 services:
   db:
-    image: mysql:8
+    image: mysql:8.4
     environment:
       MYSQL_DATABASE: bookstack-dev
       MYSQL_USER: bookstack-test
       MYSQL_PASSWORD: bookstack-test
       MYSQL_RANDOM_ROOT_PASSWORD: 'true'
-    command: --default-authentication-plugin=mysql_native_password
+    #command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ./dev/docker/init.db:/docker-entrypoint-initdb.d
       - db:/var/lib/mysql
@@ -49,7 +49,20 @@ services:
     volumes:
       - ./:/app
     entrypoint: /app/dev/docker/entrypoint.node.sh
-  mailhog:
-    image: mailhog/mailhog
+  # mailhog:
+  #   image: mailhog/mailhog
+  #   ports:
+  #     - ${DEV_MAIL_PORT:-8025}:8025
+
+  pma:
+    image: phpmyadmin
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_USER: bookstack-test
+      PMA_PASSWORD: bookstack-test
+      UPLOAD_LIMIT: 1G  # Thêm thông số cấu hình giới hạn tải lên
+      MEMORY_LIMIT: 2G  # Thêm thông số cấu hình giới hạn bộ nhớ
     ports:
-      - ${DEV_MAIL_PORT:-8025}:8025
+      - "8086:80"
